@@ -12,15 +12,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 class ClientSender extends Thread{
+	/*선언부*/
 	Socket socket; 
 	DataOutputStream out;
 	public ClientSender(Socket socket) {
-		this.socket = socket;
-		try {
-			out = new DataOutputStream(socket.getOutputStream());
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
+
 	}
 	@Override
 	public void run() {
@@ -29,22 +25,18 @@ class ClientSender extends Thread{
 	}
 }
 public class LeeChatClientTest{
-	/*선언부*/
-	JFrame jf = new JFrame();
-	static JTextArea jta_log = new JTextArea(10,60);
-	JScrollPane jsp_log = new JScrollPane(jta_log);
 	
 	/*생성자*/
 	public LeeChatClientTest() {
-		initDisplay();
 	}
 	/*메인*/
 	public static void main(String[] args) {
 		LeeChatClientTest lcct = new LeeChatClientTest();
+		
 		////////////////통신과 관련한 전역변수 추가 시작//////////////
 		try {
 			Socket socket = new Socket("127.0.0.1",3000);
-			jta_log.append("연결되었습니다."+"\n");
+			System.out.println("연결되었습니다."+"\n");
 			InputStream is = socket.getInputStream();
 			DataInputStream dis = new DataInputStream(is);
 			jta_log.append("서버메세지 : "+dis.readUTF()+"\n");

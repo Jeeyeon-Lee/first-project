@@ -32,14 +32,12 @@ public class LeeChatClientTest {
         frame.getContentPane().add(messageTextField, BorderLayout.SOUTH);
         sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
                 sendMessage();
             }
         });
         frame.getContentPane().add(sendButton, BorderLayout.EAST);
-
         initDisplay();
-
         frame.setVisible(true);
     }
 

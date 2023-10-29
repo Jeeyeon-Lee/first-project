@@ -4,71 +4,31 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeeServerThread extends Thread{
 
 	/*선언부*/
-    Socket client;
-    ObjectOutputStream oos;
-    ObjectInputStream ois;
-    List<ObjectOutputStream> outputStreams = new ArrayList<>();
+    private Socket client;
+    private ObjectOutputStream oos;
 
     /*생성자*/
-    public LeeServerThread(Socket client, List<ObjectOutputStream> outputStreams) {
-        this.client = client;
-        this.outputStreams = outputStreams;
-        try {
-            ois = new ObjectInputStream(client.getInputStream());
-            oos = new ObjectOutputStream(client.getOutputStream());
-            outputStreams.add(oos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }		
+    public LeeServerThread(Socket clientSocket, ObjectOutputStream outputStream) {
+        this.client = clientSocket;
+        this.oos = outputStream;
+    }
 	/*사용자 메소드*/
     @Override
     public void run() {
-            try {
-                while (true) {
-                	try {
-						
-                    String message = (String) ois.readObject();
-                    broadcastMessage(message);
-                	} catch (Exception e) {
-                		System.out.println("클라이언트와 연결이 끊어졌습니다. ");
-                		break;
-                	}
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (ois != null) {
-                        ois.close();
-                    }
-                    if (oos != null) {
-                        oos.close();
-                    }
-                    if (client != null) {
-                        client.close();
-                    }
-                    outputStreams.remove(oos);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
+
+            while (true) {
+                String message = (String) inputStream.readObject();
+                LeeServer server = new LeeServer();
+                server.broadcast(message);
             }
-        }
-    //발송 메소드
-	public void broadcastMessage(String message) {
-	    for (ObjectOutputStream oos : outputStreams) {
-            try {
-                oos.writeObject(message);
-                oos.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

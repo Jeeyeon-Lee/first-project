@@ -39,11 +39,11 @@ public class LeeChatClientTest{
 			System.out.println("연결되었습니다."+"\n");
 			InputStream is = socket.getInputStream();
 			DataInputStream dis = new DataInputStream(is);
-			jta_log.append("서버메세지 : "+dis.readUTF()+"\n");
-			jta_log.append("연결을 종료합니다.\n");
+			System.out.println("서버메세지 : "+dis.readUTF()+"\n");
+			System.out.println("연결을 종료합니다.\n");
 			dis.close();
 			socket.close();
-			jta_log.append("연결이 종료되었습니다.\n");
+			System.out.println("연결이 종료되었습니다.\n");
 		} catch (ConnectException ce) {
 			ce.printStackTrace();
 		} catch (Exception e) {
@@ -51,12 +51,4 @@ public class LeeChatClientTest{
 		}
 	}
 
-	/*창구현 메소드*/
-	public void initDisplay() {
-		jf.add("Center", jsp_log);
-		jf.setTitle("클라이언트측 테스트 화면 제공...");
-		jf.setSize(400, 400);
-		jf.setVisible(true);	
-		jf.setLocation(600,400);
-	}
 }

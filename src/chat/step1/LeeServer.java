@@ -14,14 +14,13 @@ import javax.swing.JTextArea;
 public class LeeServer{
 	/*선언부*/
 	JFrame jf = new JFrame();
-	JTextArea jta_log = new JTextArea(10,60);
+	static JTextArea jta_log = new JTextArea(10,60);
 	JScrollPane jsp_log = new JScrollPane(jta_log);
 	
 	Socket client = null;
 	ServerSocket server = null;
-	Thread tst = null;
 	List<Socket> userList = null;
-	List<ObjectOutputStream> oos;
+    List<ObjectOutputStream> outputStreams = new ArrayList<>();
 	/*생성자*/
 	public LeeServer() {
 		initDisplay();
@@ -31,7 +30,6 @@ public class LeeServer{
 	//스타트 -> 서버열기, 유저받기, 로그 띄우기, 서버스레드로 보내기 + 예외처리 넣기 
 	public void start() {
 		userList = new ArrayList<>();
-		oos = new ArrayList<>();
 		
 		boolean isStop = false;
 		while (!isStop) {
@@ -43,7 +41,7 @@ public class LeeServer{
 					client = server.accept();
 					jta_log.append(getTime() + " | client info : " + client.getInetAddress() + "접속하였습니다.\n");
 					userList.add(client);
-					tst = new LeeServerThread(this);
+                    LeeServerThread tst = new LeeServerThread(client, outputStreams);
 					tst.start();
 				}
 			} catch (Exception e2) {

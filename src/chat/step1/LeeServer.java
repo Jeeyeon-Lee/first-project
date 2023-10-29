@@ -1,50 +1,27 @@
 package chat.step1;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-class LeeServerThread extends Thread{
-	/*선언부*/
-	LeeServer leeServer;
-	Socket client = null;	
-	ObjectOutputStream oos;		
-	ObjectInputStream ois;
-	/*생성자*/
-	public LeeServerThread(LeeServer leeServer) {
-		this.leeServer = leeServer;
-		this.client = leeServer.socket;
-		System.out.println("client "+client +"\n");
-		try {
-			oos = new ObjectOutputStream(client.getOutputStream());
-			ois = new ObjectInputStream(client.getInputStream());
-			String msg = (String)ois.readObject();
-		} catch (Exception e) {
-		}
-	}
-	/*메소드 - 문자열 가져오기*/
-	/*메소드 - 문자열 보내기*/
-}	
 public class LeeServer{
 	/*선언부*/
 	JFrame jf = new JFrame();
 	JTextArea jta_log = new JTextArea(10,60);
 	JScrollPane jsp_log = new JScrollPane(jta_log);
+	
+	Socket client = null;
 	ServerSocket server = null;
-	Socket socket = null;
-	ObjectOutputStream oos = null;//말할때 사용
-	ObjectInputStream ois = null;//들을 때 사용
 	Thread tst = null;
-	List<LeeServerThread> userList = null;
+	List<Socket> userList = null;
+	List<ObjectOutputStream> oos;
 	/*생성자*/
 	public LeeServer() {
 		initDisplay();
@@ -53,20 +30,21 @@ public class LeeServer{
 	/*정의메소드*/
 	//스타트 -> 서버열기, 유저받기, 로그 띄우기, 서버스레드로 보내기 + 예외처리 넣기 
 	public void start() {
-		userList = new Vector<>();
+		userList = new ArrayList<>();
+		oos = new ArrayList<>();
+		
 		boolean isStop = false;
 		while (!isStop) {
 			try {
 			server = new ServerSocket(3000);
 			jta_log.append(getTime() + " | Server Ready....\n");
-				try {
-					jta_log.append(getTime() + " | client  연결 요청 대기 중...\n");
-					socket = server.accept();
-					jta_log.append(getTime() + " | client info : " + socket.getInetAddress() + "접속하였습니다.\n");
+			jta_log.append(getTime() + " | client  연결 요청 대기 중...\n");
+				while(true) {
+					client = server.accept();
+					jta_log.append(getTime() + " | client info : " + client.getInetAddress() + "접속하였습니다.\n");
+					userList.add(client);
 					tst = new LeeServerThread(this);
 					tst.start();
-				} catch (IOException e1) {
-					e1.printStackTrace();
 				}
 			} catch (Exception e2) {
 				e2.getStackTrace();

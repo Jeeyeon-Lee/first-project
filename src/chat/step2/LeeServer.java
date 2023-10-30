@@ -22,6 +22,7 @@ public class LeeServer extends Thread{
 			 , JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
 			 , JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	/*정의메소드*/
+	//포트연결, 대기, 소켓연결 시 서버스레드 생성 및 시작
 	@Override
 	public void run() {
 		globalList = new Vector<>();
@@ -41,20 +42,22 @@ public class LeeServer extends Thread{
 			e.printStackTrace();
 		}
 	}
+	//시간표시 메소드
     private String getTime() {
         SimpleDateFormat f = new SimpleDateFormat("[hh:mm:ss]");
         return f.format(new Date());
     }
+    //창 구현 메소드
 	public void initDisplay() {
 		jta_log.setLineWrap(true);
 		jf.setBackground(Color.orange);
 		jf.add("Center", jsp_log);
 		jf.setTitle("서버측 로그 출력화면 제공...");
-		jf.setSize(800, 600);
+		jf.setSize(400, 300);
 		jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	/*메인메소드*/
+	/*메인메소드 객체 생성, 시작, 창구현*/
 	public static void main(String[] args) {
 		LeeServer cs = new LeeServer();
 		System.out.println(cs);

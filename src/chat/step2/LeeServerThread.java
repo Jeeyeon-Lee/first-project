@@ -3,6 +3,7 @@ package chat.step2;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class LeeServerThread extends Thread{
 
@@ -17,18 +18,20 @@ public class LeeServerThread extends Thread{
 		System.out.println("LeeServerThread 연결");
 		this.leeServer = leeServer;
 		this.client = leeServer.socket;
-		leeServer.jta_log.append(client+" 접속\n");
+		leeServer.jta_log.append("접속"+client.getInetAddress()+"\n");
 		try {
 			oos = new ObjectOutputStream(client.getOutputStream());
 			ois = new ObjectInputStream(client.getInputStream());
 			String msg = (String)ois.readObject();
-			leeServer.jta_log.append(client+msg+"\n");
+			leeServer.jta_log.append(client.getInputStream()+msg+"\n");
 			//입장한 사람들에게 정보 받아오기 보내기 반복 -> for문
 			for(LeeServerThread lst : leeServer.globalList) {
 				this.send(lst+"\n");
 			}
 			leeServer.globalList.add(this);
 			this.broadCasting(msg);
+		} catch (SocketException se) {
+			se.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,12 +54,13 @@ public class LeeServerThread extends Thread{
 	//클라이언트 ois 듣기 / oos 말하기
 	@Override 
 	public void run() {
-		String msg;
+		String msg = null;
 		boolean isStop = false;
 		try {
 			while(!isStop) {
 				msg = (String)ois.readObject();
 				leeServer.jta_log.append(msg+"\n");
+				broadCasting(msg);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

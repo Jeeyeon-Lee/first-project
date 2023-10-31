@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -56,13 +58,11 @@ public class LeeChatClientTest extends JFrame implements ActionListener{
 				ois = new ObjectInputStream(socket.getInputStream());
 				//initDisplay에서 닉네임이 결정된 후 init메소드가 호출되므로
 				//서버에게 내가 입장한 사실을 알린다.(말하기)
-				oos.writeObject(100+"|"+nickName);//말하기 시전 - 서버한테 - 듣고 말하기
-				//서버에 말을 한 후 들을 준비를 한다.
+				oos.writeObject(100+"#"+nickName);
 				LeeChatClientThread tct = new LeeChatClientThread(this);//아직 일이없다
 				tct.start();
 			} catch (Exception e) {
-				//예외가 발생했을 때 직접적인 원인되는 클래스명 출력하기
-				System.out.println(e.toString());
+				e.printStackTrace();
 			}
 		}	
 	
@@ -71,14 +71,6 @@ public class LeeChatClientTest extends JFrame implements ActionListener{
 		//사용자의 닉네임 받기
 		nickName = JOptionPane.showInputDialog("닉네임을 입력하세요.");
 		this.setLayout(new GridLayout(1,2));
-		jp_second.setLayout(new BorderLayout());
-		jp_second.add("Center",jsp);
-		jp_second_south.setLayout(new GridLayout(2,2));
-		jp_second_south.add(jbtn_one);
-		jp_second_south.add(jbtn_change);
-		jp_second_south.add(jbtn_font);
-		jp_second_south.add(jbtn_exit);
-		jp_second.add("South",jp_second_south);
 		jp_first.setLayout(new BorderLayout());
 		jp_first_south.setLayout(new BorderLayout());
 		jp_first_south.add("Center",jtf_msg);
@@ -92,10 +84,10 @@ public class LeeChatClientTest extends JFrame implements ActionListener{
 		jp_first.add("Center",jsp_display);
 		jp_first.add("South",jp_first_south);
 		this.add(jp_first);
-		this.add(jp_second);
 		this.setTitle(nickName);
-		this.setSize(800, 550);
+		this.setSize(600, 550);
 		this.setVisible(true);
+		this.setLocation(0, 400);
 	}	
 	
 	public static void main(String[] args) {
@@ -112,11 +104,13 @@ public class LeeChatClientTest extends JFrame implements ActionListener{
 		//메시지 입력 후에 엔터 친거야?
 		if(jtf_msg == obj) {
 			try {
-				oos.writeObject(200+"|"+nickName+"|"+msg);
+				oos.writeObject(msg);
 				//메시지를 서버로 전송하고 나면 JTextField적힌 문자열은 지운다.
 				jtf_msg.setText("");
+			} catch (SocketException se) {
+				se.printStackTrace();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				e2.printStackTrace();
 			}
 		}
 	}

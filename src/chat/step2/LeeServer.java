@@ -33,10 +33,9 @@ public class LeeServer extends Thread{
             jta_log.append(getTime() + " | client  연결 요청 대기 중...\n");
 			while(!isStop) {
 				socket = server.accept();
-				jta_log.append(getTime()+" | client info:"+socket+"\n");	
-				System.out.println(this);
-				Thread tst = new LeeServerThread(this);
-				tst.start();
+				jta_log.append(getTime()+" | client info:"+socket.getInetAddress()+"\n");	
+				LeeServerThread lst = new LeeServerThread(this);
+				lst.start();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,15 +52,16 @@ public class LeeServer extends Thread{
 		jf.setBackground(Color.orange);
 		jf.add("Center", jsp_log);
 		jf.setTitle("서버측 로그 출력화면 제공...");
-		jf.setSize(400, 300);
+		jf.setSize(600, 300);
 		jf.setVisible(true);
+		jf.setLocation(0, 100);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	/*메인메소드 객체 생성, 시작, 창구현*/
 	public static void main(String[] args) {
 		LeeServer cs = new LeeServer();
 		System.out.println(cs);
-		cs.start();
 		cs.initDisplay();
+		cs.start();
 	}
 }

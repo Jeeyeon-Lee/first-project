@@ -23,10 +23,10 @@ public class LeeServerThread extends Thread{
 			oos = new ObjectOutputStream(client.getOutputStream());
 			ois = new ObjectInputStream(client.getInputStream());
 			String msg = (String)ois.readObject();
-			leeServer.jta_log.append(client.getInputStream()+msg+"\n");
 			//입장한 사람들에게 정보 받아오기 보내기 반복 -> for문
 			for(LeeServerThread lst : leeServer.globalList) {
-				this.send(lst+"\n");
+				leeServer.jta_log.append("여기"+client.getInetAddress()+msg+"\n");
+				this.send(lst.getName()+"\n");
 			}
 			leeServer.globalList.add(this);
 			this.broadCasting(msg);

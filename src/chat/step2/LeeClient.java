@@ -69,7 +69,8 @@ public class LeeClient extends JFrame implements ActionListener{
 	
 	public void init() {
 		try {
-			socket = new Socket("172.16.2.11",1004);
+//			socket = new Socket("172.16.2.11",1004);
+			socket = new Socket("192.168.35.246",1004);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
 			oos.writeObject(100 + "," + nickname);

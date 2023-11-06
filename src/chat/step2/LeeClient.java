@@ -96,26 +96,9 @@ public class LeeClient extends JFrame implements ActionListener{
 			try {
 				oos.writeObject(200 + "," + nickname + "," + msg);
 				jtf_msg.setText("");				
-//				
-//				oos.writeObject(200 + "," + nickname + "," + msg);
-//				jtf_msg.setText("");
-//				jta_display.setText(msg);
-//				//jtf_msg.setText(msg);
 			} catch (Exception e) {
 				System.out.println(e.toString());
 			}
 		}
 	}
 }
-//			}			
-//		}else if (obj == jbtn_send) {
-//			try {
-//				oos.writeObject(200 + "," + nickname + "," + msg);
-////				jtf_msg.setText("");				
-////				
-//			} catch (Exception e) {
-//				System.out.println(e.toString());
-//			}			
-//		}		
-//	}
-//}

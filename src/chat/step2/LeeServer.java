@@ -30,10 +30,10 @@ public class LeeServer extends Thread{
 		try {
 			server = new ServerSocket(1004);
 			jta_log.append(getTime()+" | Server Ready.........\n");
-            jta_log.append(getTime() + " | client  연결 요청 대기 중...\n");
+            jta_log.append(getTime() + " | client 연결 요청 대기 중...\n");
 			while(!isStop) {
 				socket = server.accept();
-				jta_log.append(getTime()+" | client info:"+socket.getInetAddress()+"\n");	
+				jta_log.append(getTime()+" | client 접속 :"+socket.getInetAddress()+"\n");	
 				LeeServerThread lst = new LeeServerThread(this);
 				lst.start();
 			}
@@ -42,7 +42,7 @@ public class LeeServer extends Thread{
 		}
 	}
 	//시간표시 메소드
-    private String getTime() {
+    public String getTime() {
         SimpleDateFormat f = new SimpleDateFormat("[hh:mm:ss]");
         return f.format(new Date());
     }

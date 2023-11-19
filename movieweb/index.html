@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <body id="root"></body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script>
+    const root = document.getElementById('root')
+    const span = React.createElement(
+      "h2", 
+      {
+        onMouseEnter:()=>{console.log('mouse enter')}
+      }, 
+        "Hello I'm a span")
+    const btn = React.createElement(
+      "button",
+      {
+        onClick:()=>{console.log('클릭했습니다.')}, style:{backgroundColor:'tomato'}
+      }, 
+        "click me")
+    const container = React.createElement('div',null,[span , btn])
+    //html로 보내기(what, where)
+    ReactDOM.render(container,root)
+  </script>
+</html>

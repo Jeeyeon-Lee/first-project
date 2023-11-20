@@ -6,12 +6,12 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = document.getElementById('root')
-    const Title = (
+    const Title = ()=> (
       <h3 id='title' onMouseEnter={()=>console.log('mouse enter')}>
         Hello I'm a Title
       </h3>
     )
-    const btn = (
+    const Button = ()=> (
       <button 
         style={{
           backgroundColor:'tomato'
@@ -21,8 +21,12 @@
         Click Me
       </button>
     )
-    const container = React.createElement('div',null,[Title , btn])
+    const Container = (
+      <div>
+        <Title />
+        <Button />
+      </div>)
     //html로 보내기(what, where)
-    ReactDOM.render(container,root)
+    ReactDOM.render(Container,root)
   </script>
 </html>

@@ -78,7 +78,7 @@ public class LeeClient extends JFrame implements ActionListener{
 		LeeClient lc = new LeeClient();
 		lc.initDisplay();
 		lc.init();
-		LoginForm lf = new LoginForm();
+//		LoginForm lf = new LoginForm();
 	}
 
 	@Override

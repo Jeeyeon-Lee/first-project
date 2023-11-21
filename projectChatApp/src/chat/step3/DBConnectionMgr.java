@@ -22,6 +22,8 @@ public class DBConnectionMgr {
 	public DBConnectionMgr(LeeServerThread leeServerThread) {
 		DBConnectionMgr.lst = leeServerThread;
 	}
+	public DBConnectionMgr() {
+	}
 	/*정의메소드*/
 	//Calendar 클래스 처럼 메소드를 통해 객체 주입 받기(세련된 표현) -> 객체에 대한라이프 사이클 관리 ->스프링에 넘김(제어역전)
 	//메소드를 통해 객체생성을 하므로 if문 사용해서 조건별 객체 생성이 가능해짐. 

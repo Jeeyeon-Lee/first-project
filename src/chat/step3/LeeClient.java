@@ -1,4 +1,4 @@
-package chat.step2;
+package chat.step3;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,8 +24,6 @@ public class LeeClient extends JFrame implements ActionListener{
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
 	String nickname = null;
-	
-	
 	JPanel jp = new JPanel();
 	JPanel jp_south = new JPanel();
 	JTextField jtf_msg = new JTextField(20);
@@ -42,25 +40,19 @@ public class LeeClient extends JFrame implements ActionListener{
 	}
 	// 메소드
 	public void initDisplay() {
-		
 		nickname = JOptionPane.showInputDialog("닉네임을 입력하세요.");
-		//this.setLayout(new GridLayout(1,2));
-		
 		jp.setLayout(new BorderLayout());
 		jp_south.setLayout(new BorderLayout());
 		jp_south.add("Center",jtf_msg);
 		jp_south.add("East",jbtn_send);
-		
 		jta_display = new JTextArea();
 		jta_display.setLineWrap(true);
 		jta_display.setOpaque(false);
 		Font font = new Font("굴림체",Font.BOLD,16);
 		jta_display.setFont(font);
 		jsp = new JScrollPane(jta_display);
-		
 		jp.add("Center",jsp);
 		jp.add("South",jp_south);
-		
 		this.setSize(500, 600);
 		this.setVisible(true);
 		this.setTitle(nickname);
@@ -83,6 +75,7 @@ public class LeeClient extends JFrame implements ActionListener{
 
 	public static void main(String[] args) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
+		LoginForm lf = new LoginForm();
 		LeeClient lc = new LeeClient();
 		lc.initDisplay();
 		lc.init();

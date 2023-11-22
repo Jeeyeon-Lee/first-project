@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <body id="root"></body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById('root')
+    const Title = ()=> (
+      <h3 id='title' onMouseEnter={()=>console.log('mouse enter')}>
+        Hello I'm a Title
+      </h3>
+    )
+    const Button = ()=> (
+      <button 
+        style={{
+          backgroundColor:'tomato'
+        }}
+          onClick={()=>{console.log('클릭했습니다.')}}
+      >
+        Click Me
+      </button>
+    )
+    const Container = (
+      <div>
+        <Title />
+        <Button />
+      </div>)
+    //html로 보내기(what, where)
+    ReactDOM.render(Container,root)
+  </script>
+</html>

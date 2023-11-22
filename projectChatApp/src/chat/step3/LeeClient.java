@@ -79,6 +79,10 @@ public class LeeClient extends JFrame implements ActionListener{
 		LeeClient lc = new LeeClient();
 		lc.initDisplay();
 		lc.init();
+<<<<<<< HEAD:src/chat/step3/LeeClient.java
+=======
+//		LoginForm lf = new LoginForm();
+>>>>>>> 5f68a6c91d9c9d67756068e7fed35a1052a71ac3:projectChatApp/src/chat/step3/LeeClient.java
 	}
 
 	@Override

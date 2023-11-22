@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginForm extends JFrame implements ActionListener {
+public class ChatLoginForm extends JFrame implements ActionListener {
 	/////////////////////////////////////////////////////
 	/* 선언부 */
 	/////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ public class LoginForm extends JFrame implements ActionListener {
 	/////////////////////////////////////////////////////
 	/* 생성자 */
 	/////////////////////////////////////////////////////
-	public LoginForm(){
+	public ChatLoginForm(){
 		initDisplay();
 	}
 
@@ -97,7 +97,7 @@ public class LoginForm extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new LoginForm();
+		new ChatLoginForm();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
